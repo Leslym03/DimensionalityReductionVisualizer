@@ -1,0 +1,147 @@
+    * {
+        box-sizing: border-box;
+        font-family: 'Open Sans', sans-serif; /* Tipo de letra bonito */
+    }
+
+    html, body {
+        background-color: #e8e8e8; /* Mejora de color */
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    .TaskOne {
+        background-color: #f7f7f7; /* Mejora de color */
+        height: 50%;
+        text-align: center;
+        margin-top: 20px;
+        border: 1px solid #aa00ee;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+    }
+
+    .TaskOne h2 {
+        padding: 10px 20px;
+        margin: 0;
+        background-color: #ffffff;
+        border: 1px solid #aa00ee;
+        border-radius: 0;
+        border-right: none;
+    }
+
+
+    .attribute {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .attribute input[type="checkbox"],
+    .attribute label {
+        margin: 5px;
+    }
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .content iframe p {
+        margin: 10px;
+    }
+
+    .contentGraficas {
+        height: 50%;
+        display: flex;
+    }
+
+    .tecnicasRd {
+        width: 17%;
+        height: auto;
+        background-color: #fff1aa;
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        padding: 15px;
+        box-sizing: border-box;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+    }
+
+   .tecnicasRd h2 {
+        margin: 5px;
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 0;
+        border-right: none;
+    }
+
+    .graficas {
+        width: 82%;
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        padding: 10px;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .graficas .container {
+        width: 50%; /* Cada gráfica ocupa el 50% del ancho del contenedor principal */
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .show-graphs-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 5px;
+    }
+
+    .show-graphs-button:hover {
+        background-color: #45a049;
+        opacity: 0.7;
+    }
+
+    .TaskFor {
+        margin-top: 30px;
+    }
+
+    .TaskFor button {
+        background-color: #552233;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+    }
+
+    .TaskFor button:hover {
+        background-color: #882233;
+        opacity: 0.7;
+    }
+
+    .bar {
+        fill: steelblue;
+    }
+
+    .container {
+        width: 30%;
+    }
+
+    span{
+      color:#777777;
+    }

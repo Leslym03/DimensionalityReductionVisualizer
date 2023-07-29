@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Dashboard</title>
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/litera/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="static/css/style.css">
+   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/scss" href="static/css/_bootswatch.scss">
+   <link rel="stylesheet" type="text/scss" href="static/css/_variables.css">
+ </head>
+
+   <div class="TaskOne">
+      <h2>Atributos</h2>
+      <div class="attribute">
+         {% for attribute in attributes %}
+            <input type="checkbox" id="checkbox_{{ attribute }}" name="attribute" value="{{ attribute }}">
+            <label for="checkbox_{{ attribute }}">{{ attribute }}</label>
+         {% endfor %}
+      </div>
+      <button class="show-graphs-button" onclick="CargarAtributos()">Cargar</button>
+   </div>
+
+    <div class="contentGraficas">
+      <div class="tecnicasRd" id="tecnicasRdDiv">
+          <h2>Técnicas RD</h2>
+          <div>
+              <p data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión."><span><b>LINEALES</b></span></p>
+              <input type="checkbox" id="checkbox1" name="grafica1">
+              <label for="checkbox1">PCA</label><br>
+          </div>
+          <div>
+              <p data-tippy-content="Las transformaciones no lineales pueden capturar relaciones complejas y no lineales entre los puntos de datos, lo que permite revelar estructuras más intrincadas y no evidentes en el espacio original de alta dimensión"><span><b>NO LIENALES</b></span></p>
+              <input type="checkbox" id="checkbox2" name="grafica2">
+              <label for="checkbox2">t-SNE</label><br>
+          </div>
+          <button class="show-graphs-button" onclick="mostrarGraficas()">Mostrar Gráficas</button>
+          <div class="TaskFor">
+            <p data-tippy-content="Pirmero se aplica Clustering y luego RD">
+               <button class="show-graphs-button" onclick="mostrarClustering_RD()">Clustering-Tec.RD </button>
+            </p>
+            <p data-tippy-content="Pirmero se aplica RD y luego Clustering">
+               <button class="show-graphs-button" onclick="mostrarRD_Clustering()">Tec.RD - Clustering </button>
+            </p>
+          </div>
+      </div>
+
+        <div class="graficas" id="graficasDiv">
+             <div class="container" id="pca_container" style="display: none;">
+                 <h2>PCA</h2>
+                 <div id="pca_plot"></div>
+             </div>
+             <div class="container" id="tsne_container" style="display: none;">
+                 <h2>t-SNE</h2>
+                 <div id="tsne_plot"></div>
+             </div>
+             <!--<div class="container" id="kmeans_container" style="display: none;">
+                 <h2>K-Means Clustepca_plotring</h2>
+                 <div id="kmeans_plot"></div>
+             </div>
+             <div class="container" id="dbscan_container" style="display: none;">
+                 <h2>DBSCAN Clustering</h2>
+                 <div id="dbscan_plot"></div>
+             </div>-->
+         </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+    // Agrega el evento onclick para mostrar el clustering y las técnicas RD
+    function mostrarClustering_RD() {
+        // Cargar y mostrar el gráfico K-Means Clustering
+        fetch('/kmeans_plot')
+            .then(response => response.json())
+            .then(data => {
+                Plotly.newPlot('kmeans_plot', data.data, data.layout);
+                // Mostrar el contenedor del gráfico K-Means Clustering
+                document.getElementById('kmeans_container').style.display = 'block';
+            });
+
+        // Cargar y mostrar el gráfico DBSCAN Clustering
+        fetch('/dbscan_plot')
+            .then(response => response.json())
+            .then(data => {
+                Plotly.newPlot('dbscan_plot', data.data, data.layout);
+                // Mostrar el contenedor del gráfico DBSCAN Clustering
+                document.getElementById('dbscan_container').style.display = 'block';
+            });
+    }
+
+       function mostrarGraficas() {
+          // Obtener los checkboxes seleccionados
+          const checkboxPCA = document.getElementById('checkbox1');
+          const checkboxTSNE = document.getElementById('checkbox2');
+
+          // Limpiar el contenido anterior de graficasDiv
+          document.getElementById('pca_container').style.display = 'none';
+          document.getElementById('tsne_container').style.display = 'none';
+
+          // Recorrer los checkboxes y mostrar las gráficas seleccionadas
+          if (checkboxPCA.checked) {
+            // Cargar y mostrar la gráfica PCA
+            document.getElementById('pca_container').style.display = 'block';
+            loadPCAPlot();
+          }
+
+          if (checkboxTSNE.checked) {
+            // Cargar y mostrar la gráfica t-SNE
+            document.getElementById('tsne_container').style.display = 'block';
+            loadTSNEPlot();
+          }
+        }
+
+        // Función para cargar el gráfico PCA
+        function loadPCAPlot() {
+            fetch('/pca_plot')
+                .then(response => response.json())
+                .then(data => {
+                    Plotly.newPlot('pca_plot', data.data, data.layout);
+                    // Añadir un evento de selección para el gráfico PCA
+                    document.getElementById('pca_plot').on('plotly_selected', (eventData) => {
+                        var selectedPoints = eventData.points;
+                        var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                        updateTSNEPlot(selectedIndices);
+                    });
+                });
+        }
+
+        // Función para cargar el gráfico t-SNE
+        function loadTSNEPlot() {
+            fetch('/tsne_plot')
+                .then(response => response.json())
+                .then(data => {
+                    Plotly.newPlot('tsne_plot', data.data, data.layout);
+                    // Añadir un evento de selección para el gráfico t-SNE
+                    document.getElementById('tsne_plot').on('plotly_selected', (eventData) => {
+                        var selectedPoints = eventData.points;
+                        var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                        updatePCAPlot(selectedIndices);
+                    });
+                });
+        }
+
+        // Función para cargar el gráfico LLE
+        function loadLLEPlot() {
+            fetch('/lle_plot')
+                .then(response => response.json())
+                .then(data => {
+                    Plotly.newPlot('lle_plot', data.data, data.layout);
+                    // Añadir un evento de selección para el gráfico LLE
+                    document.getElementById('lle_plot').on('plotly_selected', (eventData) => {
+                        var selectedPoints = eventData.points;
+                        var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                        // Implementar la función para actualizar el gráfico LLE si se desea
+                    });
+                });
+        }
+
+        // Actualizar el gráfico PCA con los puntos seleccionados en el gráfico t-SNE
+        function updatePCAPlot(selectedIndices) {
+            Plotly.restyle('pca_plot', {selectedpoints: selectedIndices});
+        }
+
+        // Actualizar el gráfico t-SNE con los puntos seleccionados en el gráfico PCA
+        function updateTSNEPlot(selectedIndices) {
+            Plotly.restyle('tsne_plot', {selectedpoints: selectedIndices});
+        }
+
+    // Cargar las técnicas RD al cargar la página
+    window.onload = function() {
+        loadPCAPlot();
+        loadTSNEPlot();
+        mostrarTecnicasRD(); // Llamar a la función para cargar las técnicas RD
+    };
+
+    </script>
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/alert.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+   <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
+   <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+   <script>
+    tippy('p[data-tippy-content]');
+   </script>
+
+
+</body>
+</html>
