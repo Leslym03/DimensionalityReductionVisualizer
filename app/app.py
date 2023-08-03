@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
 app = Flask(__name__)
 
@@ -59,6 +60,9 @@ def correlation_matrix_json():
 
 ## TECNICAS RD
 
+
+
+
 @app.route('/pca_plot')
 def pca_plot():
     # Aplicar PCA para reducir la dimensionalidad a 2 componentes principales
@@ -81,7 +85,7 @@ def pca_plot():
         ))
 
     fig.update_layout(
-        #title='PCA - Wine Data',
+        title='Resultado de aplicacion de PCA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True
@@ -90,6 +94,83 @@ def pca_plot():
     # Convertir los datos del gráfico a formato JSON compatible
     plot_data = json.loads(fig.to_json())
     return jsonify(plot_data)
+
+@app.route('/pca_and_clustering')
+def pca_and_clustering():
+    # Aplicar PCA para reducir la dimensionalidad a 2 componentes
+    pca = PCA(n_components=2)
+    wine_sintarget = wine_df.drop(columns=['target'])
+    reduced_data = pca.fit_transform(wine_sintarget)
+
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    labels = kmeans.fit_predict(reduced_data)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+
+    fig.update_layout(
+        title='Aplicacion de PCA - Clustering',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+@app.route('/clustering_and_pca')
+def clustering_and_pca():
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    wine_sintarget = wine_df.drop(columns=['target'])
+    labels = kmeans.fit_predict(wine_sintarget)
+
+    # Aplicar PCA para reducir la dimensionalidad a 2 componentes
+    pca = PCA(n_components=2)
+    reduced_data = pca.fit_transform(wine_sintarget)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+
+    fig.update_layout(
+        title='Aplicacion de Clustering - PCA',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+
+
 
 @app.route('/tsne_plot')
 def tsne_plot():

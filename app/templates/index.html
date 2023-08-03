@@ -221,28 +221,34 @@
 
         <div class="col-md-8 ms-auto" id="graficasDiv">
         <!-- PCA y t-sne -->
+
+        <!-- <div id="pca_clustering_plot"></div>-->
+        <!-- <div id="clustering_pca_plot"></div>-->
+
         <div class="container" id="pca_container" style="display: none;">
             <h3>PCA</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck3">Clustering - Tecnica RD</label>
+                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck1" checked="" autocomplete="off">
+                <label class="btn btn-primary" for="PCA-btncheck1">Resultado de RD</label>
+                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck2" autocomplete="off">
+                <label class="btn btn-primary" for="PCA-btncheck2">Tecnica RD - Clustering</label>
+                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck3" autocomplete="off">
+                <label class="btn btn-primary" for="PCA-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="pca_plot"></div>
+            <div id="pca_clustering_plot"  style="display: none;"></div>
+            <div id="clustering_pca_plot"  style="display: none;"></div>
         </div>
 
         <div class="container" id="lda_container" style="display: none;">
             <h3>LDA</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck3">Clustering - Tecnica RD</label>
+                <input type="checkbox" class="btn-check" id="LDA-btncheck1" checked="" autocomplete="off">
+                <label class="btn btn-primary" for="LDA-btncheck1">Resultado de RD</label>
+                <input type="checkbox" class="btn-check" id="LDA-btncheck2" autocomplete="off">
+                <label class="btn btn-primary" for="LDA-btncheck2">Tecnica RD - Clustering</label>
+                <input type="checkbox" class="btn-check" id="LDA-btncheck3" autocomplete="off">
+                <label class="btn btn-primary" for="LDA-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="lda_plot"></div>
         </div>
@@ -250,12 +256,12 @@
         <div class="container" id="tsne_container" style="display: none;">
             <h3>t-SNE</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck3">Clustering - Tecnica RD</label>
+                <input type="checkbox" class="btn-check" id="TSNE-btncheck1" checked="" autocomplete="off">
+                <label class="btn btn-primary" for="TSNE-btncheck1">Resultado de RD</label>
+                <input type="checkbox" class="btn-check" id="TSNE-btncheck2" autocomplete="off">
+                <label class="btn btn-primary" for="TSNE-btncheck2">Tecnica RD - Clustering</label>
+                <input type="checkbox" class="btn-check" id="TSNE-btncheck3" autocomplete="off">
+                <label class="btn btn-primary" for="TSNE-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="tsne_plot"></div>
         </div>
@@ -263,12 +269,12 @@
         <div class="container" id="isomap_container" style="display: none;">
             <h3>Isomap</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="btncheck3">Clustering - Tecnica RD</label>
+                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck1" checked="" autocomplete="off">
+                <label class="btn btn-primary" for="ISOMAP-btncheck1">Resultado de RD</label>
+                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck2" autocomplete="off">
+                <label class="btn btn-primary" for="ISOMAP-btncheck2">Tecnica RD - Clustering</label>
+                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck3" autocomplete="off">
+                <label class="btn btn-primary" for="ISOMAP-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="isomap_plot"></div>
         </div>

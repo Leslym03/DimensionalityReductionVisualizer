@@ -54,6 +54,34 @@ function mostrarGraficas() {
         loadIsomapPlot();
     }
 }
+
+
+//Funcion para mostrar resutaldo, clustering RD
+function mostrarPCA() {
+    // Obtener los checkboxes seleccionados
+    const checkboxResultado = document.getElementById('PCA-btncheck1');
+    const checkboxDRClustering = document.getElementById('PCA-btncheck2');
+    const checkboxClusteringDR = document.getElementById('PCA-btncheck3');
+    
+    document.getElementById('pca_clustering_plot').style.display = 'none';
+    document.getElementById('clustering_pca_plot').style.display = 'none';
+    
+    // Recorrer los checkboxes y mostrar las gráficas seleccionadas
+    if (checkboxResultado.checked) {
+        // Cargar y mostrar la gráfica PCA
+        document.getElementById('pca_container').style.display = 'block';
+        loadPCAPlot();
+    }
+    
+    if (checkboxDRClustering.checked) {
+        document.getElementById('pca_clustering_plot').style.display = 'block';
+        loadPCAAndClusteringPlot();
+    }
+    if (checkboxClusteringDR.checked) {
+        document.getElementById('clustering_pca_plot').style.display = 'block';
+        loadClusteringAndPCAPlot();
+    }
+}
     
 
 // Función para cargar el gráfico PCA
@@ -73,6 +101,24 @@ function loadPCAPlot() {
                 updateLDAPlot(selectedIndices);
                 updateISOMAPPlot(selectedIndices);
             });
+        });
+}
+
+// Función para cargar el gráfico PCA y Clustering
+function loadPCAAndClusteringPlot() {
+    fetch('/pca_and_clustering')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('pca_clustering_plot', JSON.parse(data));
+        });
+}
+
+// Función para cargar el gráfico Clustering y PCA
+function loadClusteringAndPCAPlot() {
+    fetch('/clustering_and_pca')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('clustering_pca_plot', JSON.parse(data));
         });
 }
 
@@ -164,11 +210,14 @@ document.querySelectorAll('[data-tippy-content]').forEach(x => {
 // Cargar ambos gráficos al cargar la página
 window.onload = function() {
     loadPCAPlot();
+    loadPCAAndClusteringPlot();
+    loadClusteringAndPCAPlot();
     loadTSNEPlot();
     loadLDAPlot();
     loadIsomapPlot();
     loadCorrelationMatrix();
     mostrarTecnicasRD(); // Llamar a la función para cargar las técnicas RD
+    mostrarPCA();
 };
 
 
