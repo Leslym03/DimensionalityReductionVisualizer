@@ -100,6 +100,9 @@ function loadPCAPlot() {
                 updateTSNEPlot(selectedIndices);
                 updateLDAPlot(selectedIndices);
                 updateISOMAPPlot(selectedIndices);
+
+                updateClusteringAndPCAPlot(selectedIndices);
+                updatePCAAndClusteringPlot(selectedIndices);
             });
         });
 }
@@ -110,6 +113,13 @@ function loadPCAAndClusteringPlot() {
         .then(response => response.json())
         .then(data => {
             Plotly.newPlot('pca_clustering_plot', JSON.parse(data));
+            // Añadir un evento de selección para el gráfico PCA
+            document.getElementById('pca_clustering_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updatePCAPlot(selectedIndices);
+                updateClusteringAndPCAPlot(selectedIndices);
+            });
         });
 }
 
@@ -119,6 +129,13 @@ function loadClusteringAndPCAPlot() {
         .then(response => response.json())
         .then(data => {
             Plotly.newPlot('clustering_pca_plot', JSON.parse(data));
+            // Añadir un evento de selección para el gráfico PCA
+            document.getElementById('clustering_pca_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updatePCAPlot(selectedIndices);
+                updatePCAAndClusteringPlot(selectedIndices);
+            });
         });
 }
 
@@ -183,6 +200,15 @@ function loadIsomapPlot() {
 function updatePCAPlot(selectedIndices) {
     Plotly.restyle('pca_plot', {selectedpoints: selectedIndices});
 }
+
+function updatePCAAndClusteringPlot(selectedIndices) {
+    Plotly.restyle('pca_clustering_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndPCAPlot(selectedIndices) {
+    Plotly.restyle('clustering_pca_plot', {selectedpoints: selectedIndices});
+}
+
 
 // Actualizar el gráfico t-SNE con los puntos seleccionados en el gráfico PCA
 function updateTSNEPlot(selectedIndices) {
