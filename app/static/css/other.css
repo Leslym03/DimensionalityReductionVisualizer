@@ -1,0 +1,28 @@
+
+
+.diagram {
+    width: 100%;
+    max-width: 400px; /* Ajusta el ancho máximo de los gráficos */
+    margin-bottom: 10px;
+}
+
+.columnas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Hasta 3 columnas */
+    gap: 10px;
+}
+
+.dashbardia{
+    display: flex;
+}
+
+.barra{
+    width: 100%;
+    max-width: 150px; /* Ajusta el ancho máximo de los gráficos */
+    margin-bottom: 10px;
+}
+
+.dashgraficas{
+    width: 100%;
+    margin-bottom: 10px;
+}

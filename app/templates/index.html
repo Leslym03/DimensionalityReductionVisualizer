@@ -9,6 +9,8 @@
 
    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
    <script src="static/js/function.js"></script>
+   <script src="static/js/sources.js"></script>
+   <link rel="stylesheet" type="text/css" href="static/css/other.css">
    <!-- Agrega el enlace a Tippy.js para los tooltips -->
   <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js">
   <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous">
@@ -181,15 +183,14 @@
 </div>
 
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-        <!-- Barra de tecnicas -->
-        <div class="card text-white bg-dark mb-3" id="tecnicasRdDiv" >
+<div class="dashbardia">
+    <!-- Barra de tecnicas -->
+    <div class="barra">
+        <div class="card text-white bg-dark mb-2" id="tecnicasRdDiv" >
             <div class="card-header">
                 <h4>Técnicas RD</h4>
             </div>
+
             <div class="card-body">
                 <span data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión">
                 <h5 class="card-title" id="tippy-lineal">Lineales</h5>
@@ -224,73 +225,75 @@
                 <button class="btn btn-primary" onclick="mostrarGraficas()">Aplicar Técnicas</button>
             </div>
         </div>
-        </div>
+    </div>
 
-        <div class="col-md-8 ms-auto" id="graficasDiv">
+    <!-- TECNICAS DE RD Y CLUSTERING -->
+    <div class="dashgraficas" id="graficasDiv">
+        <div class="columnas" id="contenedorGraficos">
 
-        <!-- TECNICAS DE RD Y CLUSTERING -->
-        <div class="container" id="pca_container" style="display: none;">
-            <h3>PCA</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="PCA-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="PCA-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="PCA-btncheck3">Clustering - Tecnica RD</label>
+            <div class="container" id="pca_container" style="display: none;">
+                <h3>PCA</h3>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck1" checked="" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="PCA-btncheck1">RD</label>
+                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck2" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="PCA-btncheck2">RD - Clustering</label>
+                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck3" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="PCA-btncheck3">Clustering - RD</label>
+                </div>
+                <div class="diagram" id="pca_plot"></div>
+                <div class="diagram" id="pca_clustering_plot"  style="display: none;"></div>
+                <div class="diagram" id="clustering_pca_plot"  style="display: none;"></div>
             </div>
-            <div id="pca_plot"></div>
-            <div id="pca_clustering_plot"  style="display: none;"></div>
-            <div id="clustering_pca_plot"  style="display: none;"></div>
-        </div>
 
-        <div class="container" id="lda_container" style="display: none;">
-            <h3>LDA</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="LDA-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="LDA-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="LDA-btncheck3">Clustering - Tecnica RD</label>
+            <div class="container" id="lda_container" style="display: none;">
+                <h3>LDA</h3>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="LDA-btncheck1">RD</label>
+                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="LDA-btncheck2">RD - Clustering</label>
+                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="LDA-btncheck3">Clustering - RD</label>
+                </div>
+                <div class="diagram" id="lda_plot"></div>
+                <div class="diagram" id="lda_clustering_plot" style="display: none;"></div>
+                <div class="diagram" id="clustering_lda_plot" style="display: none;"></div>
             </div>
-            <div id="lda_plot"></div>
-            <div id="lda_clustering_plot" style="display: none;"></div>
-            <div id="clustering_lda_plot" style="display: none;"></div>
-        </div>
 
-        <div class="container" id="tsne_container" style="display: none;">
-            <h3>t-SNE</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="TSNE-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="TSNE-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="TSNE-btncheck3">Clustering - Tecnica RD</label>
+            <div class="container" id="tsne_container" style="display: none;">
+                <h3>t-SNE</h3>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck1">RD</label>
+                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck2">RD - Clustering</label>
+                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck3">Clustering - RD</label>
+                </div>
+                <div class="diagram" id="tsne_plot"></div>
+                <div class="diagram" id="tsne_clustering_plot" style="display: none;"></div>
+                <div class="diagram" id="clustering_tsne_plot" style="display: none;"></div>
             </div>
-            <div id="tsne_plot"></div>
-            <div id="tsne_clustering_plot" style="display: none;"></div>
-            <div id="clustering_tsne_plot" style="display: none;"></div>
-        </div>
 
-        <div class="container" id="isomap_container" style="display: none;">
-            <h3>Isomap</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary" for="ISOMAP-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck2" autocomplete="off">
-                <label class="btn btn-primary" for="ISOMAP-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="ISOMAP-btncheck3" autocomplete="off">
-                <label class="btn btn-primary" for="ISOMAP-btncheck3">Clustering - Tecnica RD</label>
+            <div class="container" id="isomap_container" style="display: none;">
+                <h3>Isomap</h3>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck1" checked="" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck1">RD</label>
+                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck2" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck2">RD - Clustering</label>
+                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck3" autocomplete="off">
+                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck3">Clustering - RD</label>
+                </div>
+                <div class="diagram" id="isomap_plot"></div>
             </div>
-            <div id="isomap_plot"></div>
-        </div>
 
         </div>
     </div>
-    
+
 </div>
+
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -303,18 +306,18 @@
     <link rel="stylesheet" type="text/scss" href="static/css/_bootswatch.scss">
     <link rel="stylesheet" type="text/scss" href="static/css/_variables.css">
 
+
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/alert.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
  
     <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-   <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
-   <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
         tippy('[data-tippy-content]');
     </script>
 </body>
- <script src="https://d3js.org/d3.v5.min.js"></script>
-
 
 </html>

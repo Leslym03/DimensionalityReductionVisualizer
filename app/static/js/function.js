@@ -19,6 +19,8 @@ function loadCorrelationMatrix() {
 
 //Funcion para aplicar las tecnicas de 
 function mostrarGraficas() {
+    const contenedor = document.getElementById("contenedorGraficos");
+
     // Obtener los checkboxes seleccionados
     const checkboxPCA = document.getElementById('checkbox1');
     const checkboxTSNE = document.getElementById('checkbox2');
@@ -62,14 +64,15 @@ function mostrarPCA() {
     const checkboxResultado = document.getElementById('PCA-btncheck1');
     const checkboxDRClustering = document.getElementById('PCA-btncheck2');
     const checkboxClusteringDR = document.getElementById('PCA-btncheck3');
-    
+
+    document.getElementById('pca_plot').style.display = 'none';
     document.getElementById('pca_clustering_plot').style.display = 'none';
     document.getElementById('clustering_pca_plot').style.display = 'none';
     
     // Recorrer los checkboxes y mostrar las gráficas seleccionadas
     if (checkboxResultado.checked) {
         // Cargar y mostrar la gráfica PCA
-        document.getElementById('pca_container').style.display = 'block';
+        document.getElementById('pca_plot').style.display = 'block';
         loadPCAPlot();
     }
     
@@ -90,9 +93,9 @@ function loadPCAPlot() {
         .then(response => response.json())
         .then(data => {
             // Eliminar los colores de los puntos y establecer marcadores negros
-            var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
-            //Plotly.newPlot('pca_plot', data.data, data.layout);
-            Plotly.newPlot('pca_plot', updatedData, data.layout);
+            //var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
+            Plotly.newPlot('pca_plot', data.data, data.layout);
+            //Plotly.newPlot('pca_plot', updatedData, data.layout);
             // Añadir un evento de selección para el gráfico PCA
             document.getElementById('pca_plot').on('plotly_selected', (eventData) => {
                 var selectedPoints = eventData.points;
@@ -146,13 +149,14 @@ function mostrarTSNE() {
     const checkboxDRClustering = document.getElementById('TSNE-btncheck2');
     const checkboxClusteringDR = document.getElementById('TSNE-btncheck3');
 
+    document.getElementById('tsne_plot').style.display = 'none';
     document.getElementById('tsne_clustering_plot').style.display = 'none';
     document.getElementById('clustering_tsne_plot').style.display = 'none';
 
     // Recorrer los checkboxes y mostrar las gráficas seleccionadas
     if (checkboxResultado.checked) {
         // Cargar y mostrar la gráfica t-SNE
-        document.getElementById('tsne_container').style.display = 'block';
+        document.getElementById('tsne_plot').style.display = 'block';
         loadTSNEPlot();
     }
 
@@ -172,9 +176,9 @@ function loadTSNEPlot() {
         .then(response => response.json())
         .then(data => {
             // Eliminar los colores de los puntos y establecer marcadores negros
-            var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
-            Plotly.newPlot('tsne_plot', updatedData, data.layout);
-            //Plotly.newPlot('tsne_plot', data.data, data.layout);
+            //var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
+            //Plotly.newPlot('tsne_plot', updatedData, data.layout);
+            Plotly.newPlot('tsne_plot', data.data, data.layout);
             // Añadir un evento de selección para el gráfico t-SNE
             document.getElementById('tsne_plot').on('plotly_selected', (eventData) => {
                 var selectedPoints = eventData.points;
@@ -220,11 +224,12 @@ function mostrarLDA() {
     const checkboxDRClustering = document.getElementById('LDA-btncheck2');
     const checkboxClusteringDR = document.getElementById('LDA-btncheck3');
 
+    document.getElementById('lda_plot').style.display = 'none';
     document.getElementById('lda_clustering_plot').style.display = 'none';
     document.getElementById('clustering_lda_plot').style.display = 'none';
 
     if (checkboxResultado.checked) {
-        document.getElementById('lda_container').style.display = 'block';
+        document.getElementById('lda_plot').style.display = 'block';
         loadLDAPlot();
     }
 
@@ -244,9 +249,9 @@ function loadLDAPlot() {
         .then(response => response.json())
         .then(data => {
             // Eliminar los colores de los puntos y establecer marcadores negros
-            var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
-            Plotly.newPlot('lda_plot', updatedData, data.layout);
-            //Plotly.newPlot('tsne_plot', data.data, data.layout);
+            //var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
+            //Plotly.newPlot('lda_plot', updatedData, data.layout);
+            Plotly.newPlot('lda_plot', data.data, data.layout);
             document.getElementById('lda_plot').on('plotly_selected', (eventData) => {
                 var selectedPoints = eventData.points;
                 var selectedIndices = selectedPoints.map(point => point.pointIndex);
@@ -294,8 +299,8 @@ function loadIsomapPlot() {
         .then(response => response.json())
         .then(data => {
             // Eliminar los colores de los puntos y establecer marcadores negros
-            var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
-            Plotly.newPlot('isomap_plot', updatedData, data.layout);
+            //var updatedData = data.data.map(trace => ({ ...trace, mode: 'markers', marker: { color: 'black' } }));
+            Plotly.newPlot('isomap_plot', data.data, data.layout);
             document.getElementById('isomap_plot').on('plotly_selected', (eventData) => {
                 var selectedPoints = eventData.points;
                 var selectedIndices = selectedPoints.map(point => point.pointIndex);
@@ -353,11 +358,6 @@ function updateISOMAPPlot(selectedIndices) {
 }
 
 
-//Tippy ventanas emergentes
-document.querySelectorAll('[data-tippy-content]').forEach(x => {
-    x.setAttribute('data-tippy-content', i18n.__(x.getAttribute('data-tippy-content')));
-    tippy(x, { theme: 'manaflux' });
-   });
 
 
 // Cargar ambos gráficos al cargar la página
@@ -380,26 +380,3 @@ window.onload = function() {
 };
 
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('checkAllButton').addEventListener('click', function(e) {
-        e.preventDefault();
-        checkAll();
-    });
-    document.getElementById('desmarcar').addEventListener('click', function(e) {
-        e.preventDefault();
-        uncheckAll();
-    });
-});
-
-function checkAll() {
-    document.querySelectorAll('#atributos input[type=checkbox]').forEach(function(checkElement) {
-        checkElement.checked = true;
-    });
-}
-
-function uncheckAll() {
-    document.querySelectorAll('#atributos input[type=checkbox]').forEach(function(checkElement) {
-        checkElement.checked = false;
-    });
-}

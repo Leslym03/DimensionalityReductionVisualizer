@@ -65,7 +65,10 @@ def pca_plot():
         title='Resultado de aplicacion de PCA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400  
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -101,7 +104,10 @@ def pca_and_clustering():
         title='Aplicacion de PCA - Clustering',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -137,7 +143,10 @@ def clustering_and_pca():
         title='Aplicacion de Clustering - PCA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -171,7 +180,10 @@ def tsne_plot():
         title='Resultado de aplicacion de t-SNE',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -206,7 +218,10 @@ def clustering_and_tsne():
         title='Aplicacion de Clustering - t-SNE',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -241,7 +256,10 @@ def tsne_and_clustering():
         title='Aplicacion de t-SNE - Clustering',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -275,7 +293,10 @@ def lda_plot():
         title='Resultado de aplicacion de LDA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -310,7 +331,10 @@ def lda_and_clustering():
         title='Aplicacion de LDA - Clustering',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -347,7 +371,10 @@ def clustering_and_lda():
         title='Aplicacion de Clustering - LDA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
@@ -382,7 +409,10 @@ def isomap_plot():
         title='Resultado de aplicacion de ISOMAP',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
-        showlegend=True
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
     )
 
     # Convertir los datos del gráfico a formato JSON compatible
