@@ -190,41 +190,45 @@
             <div class="card-header">
                 <h4>Técnicas RD</h4>
             </div>
-                <div class="card-body">
-                    <span data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión">
-                    <h5 class="card-title" id="tippy-lineal">Lineales</h5>
-                    </span>
-                    <input class="form-check-input" type="checkbox" id="checkbox1" name="grafica1">
-                    <label class="form-check-label" for="checkbox1">PCA</label>
-                    <br>
-                    <input class="form-check-input" type="checkbox" id="checkbox3" name="grafica3">
-                    <label class="form-check-label" for="checkbox3">LDA</label>
-                </div>
+            <div class="card-body">
+                <span data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión">
+                <h5 class="card-title" id="tippy-lineal">Lineales</h5>
+                </span>
+                <span data-tippy-content=" Maximiza la varianza de los datos al proyectarlos en un nuevo subespacio.">
+                <input class="form-check-input" type="checkbox" id="checkbox1" name="grafica1">
+                <label class="form-check-label" for="checkbox1">PCA</label>
+                </span>
+                <br>
+                <span data-tippy-content="Maximiza la separabilidad entre clases.">
+                <input class="form-check-input" type="checkbox" id="checkbox3" name="grafica3">
+                <label class="form-check-label" for="checkbox3">LDA</label>
+                </span>
+            </div>
                 
-                <div class="card-body">
-                    <span data-tippy-content="Estas transformaciones pueden capturar relaciones complejas y no lineales entre los puntos de datos, lo que permite revelar estructuras más intrincadas y no evidentes en el espacio original de alta dimensión">
-                    <h5 class="card-title" id="tippy-lineal">No lineales</h5>
-                    <input class="form-check-input" type="checkbox" id="checkbox2" name="grafica2">
-                    <label class="form-check-label" for="checkbox2">t-SNE</label>
-                    <br>
-                    <input class="form-check-input" type="checkbox" id="checkbox4" name="grafica4">
-                    <label class="form-check-label" for="checkbox4">Isomap</label>
-                </div>
+            <div class="card-body">
+                <span data-tippy-content="Estas transformaciones pueden capturar relaciones complejas y no lineales entre los puntos de datos, lo que permite revelar estructuras más intrincadas y no evidentes en el espacio original de alta dimensión">
+                <h5 class="card-title" id="tippy-lineal">No lineales</h5>
+                </span>
+                <span data-tippy-content="Este algoritmo intenta mantener la estructura local y global, priorizando la estructura local en caso de conflicto.">
+                <input class="form-check-input" type="checkbox" id="checkbox2" name="grafica2">
+                <label class="form-check-label" for="checkbox2">t-SNE</label>
+                </span>
+                <br>
+                <span data-tippy-content="Este algoritmo intenta mantener la estructura geodésica (distancia más corta a lo largo de la superficie) entre los puntos.">
+                <input class="form-check-input" type="checkbox" id="checkbox4" name="grafica4">
+                <label class="form-check-label" for="checkbox4">Isomap</label>
+                </span>
+            </div>
 
-                <div class="card-body">
-                    <button class="btn btn-primary" onclick="mostrarGraficas()">Aplicar Técnicas</button>
-                </div>
-
-            
+            <div class="card-body">
+                <button class="btn btn-primary" onclick="mostrarGraficas()">Aplicar Técnicas</button>
+            </div>
         </div>
         </div>
 
         <div class="col-md-8 ms-auto" id="graficasDiv">
-        <!-- PCA y t-sne -->
 
-        <!-- <div id="pca_clustering_plot"></div>-->
-        <!-- <div id="clustering_pca_plot"></div>-->
-
+        <!-- TECNICAS DE RD Y CLUSTERING -->
         <div class="container" id="pca_container" style="display: none;">
             <h3>PCA</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -243,27 +247,31 @@
         <div class="container" id="lda_container" style="display: none;">
             <h3>LDA</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="LDA-btncheck1" checked="" autocomplete="off">
+                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
                 <label class="btn btn-primary" for="LDA-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="LDA-btncheck2" autocomplete="off">
+                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
                 <label class="btn btn-primary" for="LDA-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="LDA-btncheck3" autocomplete="off">
+                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
                 <label class="btn btn-primary" for="LDA-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="lda_plot"></div>
+            <div id="lda_clustering_plot" style="display: none;"></div>
+            <div id="clustering_lda_plot" style="display: none;"></div>
         </div>
 
         <div class="container" id="tsne_container" style="display: none;">
             <h3>t-SNE</h3>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" id="TSNE-btncheck1" checked="" autocomplete="off">
+                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
                 <label class="btn btn-primary" for="TSNE-btncheck1">Resultado de RD</label>
-                <input type="checkbox" class="btn-check" id="TSNE-btncheck2" autocomplete="off">
+                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
                 <label class="btn btn-primary" for="TSNE-btncheck2">Tecnica RD - Clustering</label>
-                <input type="checkbox" class="btn-check" id="TSNE-btncheck3" autocomplete="off">
+                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
                 <label class="btn btn-primary" for="TSNE-btncheck3">Clustering - Tecnica RD</label>
             </div>
             <div id="tsne_plot"></div>
+            <div id="tsne_clustering_plot" style="display: none;"></div>
+            <div id="clustering_tsne_plot" style="display: none;"></div>
         </div>
 
         <div class="container" id="isomap_container" style="display: none;">

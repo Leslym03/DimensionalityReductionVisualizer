@@ -10,6 +10,8 @@ import json
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import DBSCAN
 
 app = Flask(__name__)
 
@@ -18,57 +20,33 @@ data = load_wine()
 wine_df = pd.DataFrame(data.data, columns=data.feature_names)
 wine_df['target'] = data.target
 
+# Estandarizar los datos
+scaler = StandardScaler()
+wine_sintarget = wine_df.drop(columns=['target'])
+wine_sintarget_scaled = pd.DataFrame(scaler.fit_transform(wine_sintarget), columns=wine_sintarget.columns)
+
+
 @app.route('/')
 def index():
    return render_template('index.html')
 
-'''
-@app.route('/')
-def index():
-   img_path = create_correlation_matrix()
-   return render_template('index.html', img_path=img_path)
-
-def create_correlation_matrix():
-    # Calcular la matriz de correlación
-    correlation_matrix = wine_df.corr()
-
-    # Crear una figura de Seaborn con la matriz de correlación
-    sns.set(font_scale=1.2)
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(correlation_matrix, annot=False,square=True, cmap='Blues', linewidths=0.5, ax=ax)
-    
-    # Guardar la figura como una imagen en el servidor
-    img_path = 'static/correlation_matrix.png'
-    plt.savefig(img_path, bbox_inches='tight')
-    plt.close()
-
-    return img_path
-'''
-
+# Calcular la matriz de correlación de atributos
 @app.route('/correlation_matrix')
 def correlation_matrix_json():
-    # Calcular la matriz de correlación
     correlation_matrix = wine_df.corr()
-
     # Convertir la matriz de correlación a formato JSON compatible
     correlation_matrix_json = correlation_matrix.to_json(orient='split')
-
     return jsonify(correlation_matrix_json)
 
 
-
-
-## TECNICAS RD
-
-
-
+########################################## PCA
 
 @app.route('/pca_plot')
 def pca_plot():
     # Aplicar PCA para reducir la dimensionalidad a 2 componentes principales
     pca = PCA(n_components=2)
-    wine_sintarget = wine_df.drop(columns=['target'])
-    reduced_data = pca.fit_transform(wine_sintarget)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = pca.fit_transform(wine_sintarget_scaled)
 
     # Crear un DataFrame con los datos reducidos
     reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
@@ -83,7 +61,6 @@ def pca_plot():
             mode='markers',
             name=f'Clase {target_label}'
         ))
-
     fig.update_layout(
         title='Resultado de aplicacion de PCA',
         xaxis_title='Componente 1',
@@ -95,12 +72,13 @@ def pca_plot():
     plot_data = json.loads(fig.to_json())
     return jsonify(plot_data)
 
+
 @app.route('/pca_and_clustering')
 def pca_and_clustering():
     # Aplicar PCA para reducir la dimensionalidad a 2 componentes
     pca = PCA(n_components=2)
-    wine_sintarget = wine_df.drop(columns=['target'])
-    reduced_data = pca.fit_transform(wine_sintarget)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = pca.fit_transform(wine_sintarget_scaled)
 
     # Realizar clustering utilizando K-means
     kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
@@ -119,7 +97,6 @@ def pca_and_clustering():
             mode='markers',
             name=f'Cluster {cluster_label}'
         ))
-
     fig.update_layout(
         title='Aplicacion de PCA - Clustering',
         xaxis_title='Componente 1',
@@ -136,12 +113,12 @@ def pca_and_clustering():
 def clustering_and_pca():
     # Realizar clustering utilizando K-means
     kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
-    wine_sintarget = wine_df.drop(columns=['target'])
-    labels = kmeans.fit_predict(wine_sintarget)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    labels = kmeans.fit_predict(wine_sintarget_scaled)
 
     # Aplicar PCA para reducir la dimensionalidad a 2 componentes
     pca = PCA(n_components=2)
-    reduced_data = pca.fit_transform(wine_sintarget)
+    reduced_data = pca.fit_transform(wine_sintarget_scaled)
 
     # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
     reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
@@ -156,7 +133,6 @@ def clustering_and_pca():
             mode='markers',
             name=f'Cluster {cluster_label}'
         ))
-
     fig.update_layout(
         title='Aplicacion de Clustering - PCA',
         xaxis_title='Componente 1',
@@ -169,15 +145,14 @@ def clustering_and_pca():
     return jsonify(plot_data)
 
 
-
-
+########################################## TSNE
 
 @app.route('/tsne_plot')
 def tsne_plot():
     # Aplicar t-SNE para reducir la dimensionalidad a 2 componentes
     tsne = TSNE(n_components=2, random_state=42)
-    wine_sintarget = wine_df.drop(columns=['target'])
-    reduced_data = tsne.fit_transform(wine_sintarget)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = tsne.fit_transform(wine_sintarget_scaled)
 
     # Crear un DataFrame con los datos reducidos
     reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
@@ -192,9 +167,8 @@ def tsne_plot():
             mode='markers',
             name=f'Clase {target_label}'
         ))
-
     fig.update_layout(
-        #title='t-SNE - Wine Data',
+        title='Resultado de aplicacion de t-SNE',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True
@@ -203,13 +177,86 @@ def tsne_plot():
     # Convertir los datos del gráfico a formato JSON compatible
     plot_data = json.loads(fig.to_json())
     return jsonify(plot_data)
+
+@app.route('/clustering_and_tsne')
+def clustering_and_tsne():
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    wine_sintarget_scaled['Cluster'] = kmeans.fit_predict(wine_sintarget_scaled)
+
+    # Aplicar t-SNE para reducir la dimensionalidad a 2 componentes
+    tsne = TSNE(n_components=2, random_state=42)
+    reduced_data = tsne.fit_transform(wine_sintarget_scaled)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = wine_sintarget_scaled['Cluster']
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+    fig.update_layout(
+        title='Aplicacion de Clustering - t-SNE',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+@app.route('/tsne_and_clustering')
+def tsne_and_clustering():
+    # Aplicar t-SNE para reducir la dimensionalidad a 2 componentes
+    tsne = TSNE(n_components=2, random_state=42)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = tsne.fit_transform(wine_sintarget_scaled)
+
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    labels = kmeans.fit_predict(reduced_data)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+    fig.update_layout(
+        title='Aplicacion de t-SNE - Clustering',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+########################################## LDA
 
 @app.route('/lda_plot')
 def lda_plot():
     # Aplicar LDA para reducir la dimensionalidad a 2 componentes
     lda = LinearDiscriminantAnalysis(n_components=2)
-    wine_sintarget = wine_df.drop(columns=['target'])
-    reduced_data = lda.fit_transform(wine_sintarget, wine_df['target'])
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = lda.fit_transform(wine_sintarget_scaled, wine_df['target'])
 
     # Crear un DataFrame con los datos reducidos
     reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
@@ -224,8 +271,8 @@ def lda_plot():
             mode='markers',
             name=f'Clase {target_label}'
         ))
-
     fig.update_layout(
+        title='Resultado de aplicacion de LDA',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True
@@ -234,6 +281,81 @@ def lda_plot():
     # Convertir los datos del gráfico a formato JSON compatible
     plot_data = json.loads(fig.to_json())
     return jsonify(plot_data)
+
+@app.route('/lda_and_clustering')
+def lda_and_clustering():
+    # Aplicar LDA para reducir la dimensionalidad a 2 componentes
+    lda = LinearDiscriminantAnalysis(n_components=2)
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    reduced_data = lda.fit_transform(wine_sintarget_scaled, wine_df['target'])
+
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    labels = kmeans.fit_predict(reduced_data)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+    fig.update_layout(
+        title='Aplicacion de LDA - Clustering',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+@app.route('/clustering_and_lda')
+def clustering_and_lda():
+    # Realizar clustering utilizando K-means
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+    wine_sintarget_scaled = wine_df.drop(columns=['target'])
+    wine_sintarget_scaled['Cluster'] = kmeans.fit_predict(wine_sintarget_scaled)
+
+    # Aplicar LDA para reducir la dimensionalidad a 2 componentes
+    lda = LinearDiscriminantAnalysis(n_components=2)
+    reduced_data = lda.fit_transform(wine_sintarget_scaled, wine_df['target'])
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = wine_sintarget_scaled['Cluster']
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+
+    fig.update_layout(
+        title='Aplicacion de Clustering - LDA',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+########################################## ISOMAP
 
 @app.route('/isomap_plot')
 def isomap_plot():
@@ -257,6 +379,7 @@ def isomap_plot():
         ))
 
     fig.update_layout(
+        title='Resultado de aplicacion de ISOMAP',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True

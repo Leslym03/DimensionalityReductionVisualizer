@@ -82,7 +82,7 @@ function mostrarPCA() {
         loadClusteringAndPCAPlot();
     }
 }
-    
+
 
 // Función para cargar el gráfico PCA
 function loadPCAPlot() {
@@ -139,6 +139,33 @@ function loadClusteringAndPCAPlot() {
         });
 }
 
+//Funcion para mostrar resutaldo, clustering t-SNE
+function mostrarTSNE() {
+    // Obtener los checkboxes seleccionados
+    const checkboxResultado = document.getElementById('TSNE-btncheck1');
+    const checkboxDRClustering = document.getElementById('TSNE-btncheck2');
+    const checkboxClusteringDR = document.getElementById('TSNE-btncheck3');
+
+    document.getElementById('tsne_clustering_plot').style.display = 'none';
+    document.getElementById('clustering_tsne_plot').style.display = 'none';
+
+    // Recorrer los checkboxes y mostrar las gráficas seleccionadas
+    if (checkboxResultado.checked) {
+        // Cargar y mostrar la gráfica t-SNE
+        document.getElementById('tsne_container').style.display = 'block';
+        loadTSNEPlot();
+    }
+
+    if (checkboxDRClustering.checked) {
+        document.getElementById('tsne_clustering_plot').style.display = 'block';
+        loadTSNEClusteringPlot();
+    }
+    if (checkboxClusteringDR.checked) {
+        document.getElementById('clustering_tsne_plot').style.display = 'block';
+        loadClusteringAndTSNEPlot();
+    }
+}
+
 // Función para cargar el gráfico t-SNE
 function loadTSNEPlot() {
     fetch('/tsne_plot')
@@ -159,6 +186,58 @@ function loadTSNEPlot() {
         });
 }
 
+// Función para cargar el gráfico t-SNE y DBSCAN
+function loadTSNEClusteringPlot() {
+    fetch('/tsne_and_clustering')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('tsne_clustering_plot', JSON.parse(data));
+            document.getElementById('tsne_clustering_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updateDBSCANPlot(selectedIndices);
+            });
+        });
+}
+
+// Función para cargar el gráfico DBSCAN y t-SNE
+function loadClusteringAndTSNEPlot() {
+    fetch('/clustering_and_tsne')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('clustering_tsne_plot', JSON.parse(data));
+            document.getElementById('clustering_tsne_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updateTSNEPlot(selectedIndices);
+            });
+        });
+}
+
+// Función para mostrar resutaldo, clustering LDA
+function mostrarLDA() {
+    const checkboxResultado = document.getElementById('LDA-btncheck1');
+    const checkboxDRClustering = document.getElementById('LDA-btncheck2');
+    const checkboxClusteringDR = document.getElementById('LDA-btncheck3');
+
+    document.getElementById('lda_clustering_plot').style.display = 'none';
+    document.getElementById('clustering_lda_plot').style.display = 'none';
+
+    if (checkboxResultado.checked) {
+        document.getElementById('lda_container').style.display = 'block';
+        loadLDAPlot();
+    }
+
+    if (checkboxDRClustering.checked) {
+        document.getElementById('lda_clustering_plot').style.display = 'block';
+        loadLDAClusteringPlot();
+    }
+    if (checkboxClusteringDR.checked) {
+        document.getElementById('clustering_lda_plot').style.display = 'block';
+        loadClusteringAndLDAPlot();
+    }
+}
+
 // Función para cargar el gráfico LDA
 function loadLDAPlot() {
     fetch('/lda_plot')
@@ -177,6 +256,38 @@ function loadLDAPlot() {
             });
         });
 }
+
+// Función para cargar el gráfico LDA y Clustering
+function loadLDAClusteringPlot() {
+    fetch('/lda_and_clustering')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('lda_clustering_plot', JSON.parse(data));
+            document.getElementById('lda_clustering_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updateLDAPlot(selectedIndices);
+                updateClusteringAndLDAPlot(selectedIndices);
+            });
+        });
+}
+
+// Función para cargar el gráfico Clustering y LDA
+function loadClusteringAndLDAPlot() {
+    fetch('/clustering_and_lda')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('clustering_lda_plot', JSON.parse(data));
+            document.getElementById('clustering_lda_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updateLDAPlot(selectedIndices);
+                updateLDAClusteringPlot(selectedIndices);
+            });
+        });
+}
+
+
 // Función para cargar el gráfico de Isomap
 function loadIsomapPlot() {
     fetch('/isomap_plot')
@@ -215,9 +326,25 @@ function updateTSNEPlot(selectedIndices) {
     Plotly.restyle('tsne_plot', {selectedpoints: selectedIndices});
 }
 
+function updateTSNEClusteringPlot(selectedIndices) {
+    Plotly.restyle('tsne_clustering_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndTSNEPlot(selectedIndices) {
+    Plotly.restyle('clustering_tsne_plot', {selectedpoints: selectedIndices});
+}
+
 // Actualizar el gráfico LDA con los puntos seleccionados en los otros gráficos
 function updateLDAPlot(selectedIndices) {
     Plotly.restyle('lda_plot', { selectedpoints: selectedIndices });
+}
+
+function updateLDAClusteringPlot(selectedIndices) {
+    Plotly.restyle('lda_clustering_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndLDAPlot(selectedIndices) {
+    Plotly.restyle('clustering_lda_plot', {selectedpoints: selectedIndices});
 }
 
 // Actualizar el gráfico Isomap con los puntos seleccionados en los otros gráficos
@@ -239,11 +366,17 @@ window.onload = function() {
     loadPCAAndClusteringPlot();
     loadClusteringAndPCAPlot();
     loadTSNEPlot();
+    loadClusteringAndTSNEPlot();
+    loadTSNEClusteringPlot();
     loadLDAPlot();
+    loadLDAClusteringPlot()
+    loadClusteringAndLDAPlot()
     loadIsomapPlot();
     loadCorrelationMatrix();
     mostrarTecnicasRD(); // Llamar a la función para cargar las técnicas RD
     mostrarPCA();
+    mostrarLDA();
+    mostrarTSNE();
 };
 
 
