@@ -1,0 +1,41 @@
+<div class="barra">
+    <div class="card text-white bg-dark mb-2" id="tecnicasRdDiv" >
+        <div class="card-header">
+            <h4>Técnicas RD</h4>
+        </div>
+
+        <div class="card-body">
+            <span data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión">
+            <h5 class="card-title" id="tippy-lineal">Lineales</h5>
+            </span>
+            <span data-tippy-content=" Maximiza la varianza de los datos al proyectarlos en un nuevo subespacio.">
+            <input class="form-check-input" type="checkbox" id="checkbox1" name="grafica1">
+            <label class="form-check-label" for="checkbox1">PCA</label>
+            </span>
+            <br>
+            <span data-tippy-content="Maximiza la separabilidad entre clases.">
+            <input class="form-check-input" type="checkbox" id="checkbox3" name="grafica3">
+            <label class="form-check-label" for="checkbox3">LDA</label>
+            </span>
+        </div>
+            
+        <div class="card-body">
+            <span data-tippy-content="Estas transformaciones pueden capturar relaciones complejas y no lineales entre los puntos de datos, lo que permite revelar estructuras más intrincadas y no evidentes en el espacio original de alta dimensión">
+            <h5 class="card-title" id="tippy-lineal">No lineales</h5>
+            </span>
+            <span data-tippy-content="Este algoritmo intenta mantener la estructura local y global, priorizando la estructura local en caso de conflicto.">
+            <input class="form-check-input" type="checkbox" id="checkbox2" name="grafica2">
+            <label class="form-check-label" for="checkbox2">t-SNE</label>
+            </span>
+            <br>
+            <span data-tippy-content="Este algoritmo intenta mantener la estructura geodésica (distancia más corta a lo largo de la superficie) entre los puntos.">
+            <input class="form-check-input" type="checkbox" id="checkbox4" name="grafica4">
+            <label class="form-check-label" for="checkbox4">Isomap</label>
+            </span>
+        </div>
+
+        <div class="card-body">
+            <button class="btn btn-primary" onclick="mostrarGraficas()">Aplicar Técnicas</button>
+        </div>
+    </div>
+</div>

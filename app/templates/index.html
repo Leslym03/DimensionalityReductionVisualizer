@@ -2,299 +2,24 @@
 <html lang="en">
 
  <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-   <script src="static/js/function.js"></script>
-   <script src="static/js/sources.js"></script>
-   <link rel="stylesheet" type="text/css" href="static/css/other.css">
-   <!-- Agrega el enlace a Tippy.js para los tooltips -->
-  <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js">
-  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous">
+    <title>Dashboard</title>
 
-  <!-- También agrega la biblioteca de Tippy.js -->
-  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy.umd.js" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="static/js/function.js"></script>
+    <script src="static/js/sources.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/other.css">
+    <!-- Agrega el enlace a Tippy.js para los tooltips -->
+    <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous">
 
-</head>
- <body>
+    <!-- También agrega la biblioteca de Tippy.js -->
+    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy.umd.js" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous"></script>
 
-    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Proyecto Reduccion de Dimensionalidad</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor03">
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-            <a class="nav-link active" href="">Home
-                <span class="visually-hidden"></span>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/wine">Wine</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/communties">Communities</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/airquality">Air Quality</a>
-            </li>
-        </ul>
-        </div>
-    </div>
-    </nav>
-
-    <br>
-    <div class="container">
-        <h1 class="text-center">Wine</h1>
-    </div>
-
-
-<!-- Lista de atributos de Wine y casilla de selección -->
-<div class="container">
-    <div class="row">
-    <div class="col-md-4">
-   
-        <div class="card bg-secondary mb-3" style="max-width: 30rem;">
-        <div class="card-header">
-            <h4>Atributos</h4>
-        </div>
-        <div class="card-body">
-            <h6 class="card-subtitle text-muted">Seleccione los atributos para la Reduccion de Dimensionalidad (RD)</h6>
-        </div>
-        <div class="card-body" id="atributos">
-
-            <input class="form-check-input" type="checkbox" name="class" value="class" id="class" checked="">
-            <label class="form-check-label" for="flexCheckDefault">
-                <span data-tippy-content="Es el identificador de clase (0, 1, 2) que indica el tipo de vino.">
-                    <p class="card-text">Clase</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="alcohol" value="alcohol" id="alcohol" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Contenido de alcohol del vino (%).">
-                    <p class="card-text">Alcohol</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="malic_acid" value="malic_acid" id="malic_acid" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de ácido málico en el vino (g/L).">
-                    <p class="card-text">Malic Acid</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="ash" value="ash" id="ash" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad total de minerales en el vino después de la evaporación (g/L).">
-                    <p class="card-text">Ash</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="alcalinity_of_ash" value="alcalinity_of_ash" id="alcalinity_of_ash" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de ceniza alcalina en el vino (meq/L).">
-                    <p class="card-text">Alcalinity of Ash</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="magnesium" value="magnesium" id="magnesium" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Concentración de magnesio en el vino (mg/L).">
-                    <p class="card-text">Magnesium</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="total_phenols" value="total_phenols" id="total_phenols" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad total de compuestos fenólicos en el vino (mg CE/L).">
-                    <p class="card-text">Total Phenols</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="flavanoids" value="flavanoids" id="flavanoids" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de flavonoides en el vino (mg CE/L).">
-                    <p class="card-text">Flavanoids</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="nonflavanoid_phenols" value="nonflavanoid_phenols" id="nonflavanoid_phenols" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de compuestos fenólicos no flavonoides en el vino (mg GAE/L).">
-                    <p class="card-text">Nonflavanoid Phenols</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="proanthocyanins" value="proanthocyanins" id="proanthocyanins" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de proantocianidinas en el vino (mg C3G/L).">
-                    <p class="card-text">Proanthocyanins</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="color_intensity" value="color_intensity" id="color_intensity" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Intensidad del color del vino, medida como absorbancia a 420 nm.">
-                    <p class="card-text">Color Intensity</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="hue" value="hue" id="hue" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Tonalidad del color del vino, medida en grados desde el rojo hacia el verde (°).">
-                    <p class="card-text">Hue</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="od280" value="od280" id="od280" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Relación de absorbancia óptica entre 280 nm y 315 nm, que puede usarse para estimar la concentración de proteínas ">
-                    <p class="card-text">OD280/OD315 of diluted wines</p>
-                </span>
-            </label><br>
-            <input class="form-check-input" type="checkbox" name="proline" value="proline" id="proline" checked="">
-            <label class="form-check-label" for="flexCheckChecked">
-                <span data-tippy-content="Cantidad de proline en el vino, un aminoácido que influye en el sabor y la textura (mg/L).">
-                    <p class="card-text">Proline</p>
-                </span>
-            </label>
-
-
-
-        <div class="card-body">
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="">
-                <label id="desmarcar" class="btn btn-outline-primary" for="btnradio1">Desmarcar todos</label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="">
-                <label id="checkAllButton" class="btn btn-outline-primary" for="btnradio2">Marcar todos</label>
-              </div>
-        </div>
-
-            
-        </div>
-    </div>
-    </div>
-    <div class="col-md-8">
-        <div class="card bg-secondary mb-3"  style="max-width: auto;">
-            <h4 class="card-header">Matriz de Correlación de Wine</h4>
-            <div class="card-body">
-                <div id="correlation_matrix"></div>
-            </div>
-            
-        </div>
-    </div>
-    
-</div>
-</div>
-
-
-<div class="dashbardia">
-    <!-- Barra de tecnicas -->
-    <div class="barra">
-        <div class="card text-white bg-dark mb-2" id="tecnicasRdDiv" >
-            <div class="card-header">
-                <h4>Técnicas RD</h4>
-            </div>
-
-            <div class="card-body">
-                <span data-tippy-content="Estas transformaciones conservan las relaciones lineales entre los puntos de datos, lo que significa que las relaciones lineales en el espacio original se mantienen en el espacio de menor dimensión">
-                <h5 class="card-title" id="tippy-lineal">Lineales</h5>
-                </span>
-                <span data-tippy-content=" Maximiza la varianza de los datos al proyectarlos en un nuevo subespacio.">
-                <input class="form-check-input" type="checkbox" id="checkbox1" name="grafica1">
-                <label class="form-check-label" for="checkbox1">PCA</label>
-                </span>
-                <br>
-                <span data-tippy-content="Maximiza la separabilidad entre clases.">
-                <input class="form-check-input" type="checkbox" id="checkbox3" name="grafica3">
-                <label class="form-check-label" for="checkbox3">LDA</label>
-                </span>
-            </div>
-                
-            <div class="card-body">
-                <span data-tippy-content="Estas transformaciones pueden capturar relaciones complejas y no lineales entre los puntos de datos, lo que permite revelar estructuras más intrincadas y no evidentes en el espacio original de alta dimensión">
-                <h5 class="card-title" id="tippy-lineal">No lineales</h5>
-                </span>
-                <span data-tippy-content="Este algoritmo intenta mantener la estructura local y global, priorizando la estructura local en caso de conflicto.">
-                <input class="form-check-input" type="checkbox" id="checkbox2" name="grafica2">
-                <label class="form-check-label" for="checkbox2">t-SNE</label>
-                </span>
-                <br>
-                <span data-tippy-content="Este algoritmo intenta mantener la estructura geodésica (distancia más corta a lo largo de la superficie) entre los puntos.">
-                <input class="form-check-input" type="checkbox" id="checkbox4" name="grafica4">
-                <label class="form-check-label" for="checkbox4">Isomap</label>
-                </span>
-            </div>
-
-            <div class="card-body">
-                <button class="btn btn-primary" onclick="mostrarGraficas()">Aplicar Técnicas</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TECNICAS DE RD Y CLUSTERING -->
-    <div class="dashgraficas" id="graficasDiv">
-        <div class="columnas" id="contenedorGraficos">
-
-            <div class="container" id="pca_container" style="display: none;">
-                <h3>PCA</h3>
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck1" checked="" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="PCA-btncheck1">RD</label>
-                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck2" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="PCA-btncheck2">RD - Clustering</label>
-                    <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck3" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="PCA-btncheck3">Clustering - RD</label>
-                </div>
-                <div class="diagram" id="pca_plot"></div>
-                <div class="diagram" id="pca_clustering_plot"  style="display: none;"></div>
-                <div class="diagram" id="clustering_pca_plot"  style="display: none;"></div>
-            </div>
-
-            <div class="container" id="lda_container" style="display: none;">
-                <h3>LDA</h3>
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="LDA-btncheck1">RD</label>
-                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="LDA-btncheck2">RD - Clustering</label>
-                    <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="LDA-btncheck3">Clustering - RD</label>
-                </div>
-                <div class="diagram" id="lda_plot"></div>
-                <div class="diagram" id="lda_clustering_plot" style="display: none;"></div>
-                <div class="diagram" id="clustering_lda_plot" style="display: none;"></div>
-            </div>
-
-            <div class="container" id="tsne_container" style="display: none;">
-                <h3>t-SNE</h3>
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck1">RD</label>
-                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck2">RD - Clustering</label>
-                    <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="TSNE-btncheck3">Clustering - RD</label>
-                </div>
-                <div class="diagram" id="tsne_plot"></div>
-                <div class="diagram" id="tsne_clustering_plot" style="display: none;"></div>
-                <div class="diagram" id="clustering_tsne_plot" style="display: none;"></div>
-            </div>
-
-            <div class="container" id="isomap_container" style="display: none;">
-                <h3>Isomap</h3>
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck1" checked="" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck1">RD</label>
-                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck2" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck2">RD - Clustering</label>
-                    <input type="checkbox" class="btn-check" id="ISOMAP-btncheck3" autocomplete="off">
-                    <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck3">Clustering - RD</label>
-                </div>
-                <div class="diagram" id="isomap_plot"></div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -306,11 +31,10 @@
     <link rel="stylesheet" type="text/scss" href="static/css/_bootswatch.scss">
     <link rel="stylesheet" type="text/scss" href="static/css/_variables.css">
 
-
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/alert.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
- 
+
     <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
     <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
@@ -318,6 +42,24 @@
     <script>
         tippy('[data-tippy-content]');
     </script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"></script>
+
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    {% include 'data-tec.html' %}
+
+    <div class="dashbardia">
+        {% include 'select-tec.html' %}
+        {% include 'tec-clustering.html' %}
+
+    </div>
+    
+
+    
 </body>
 
 </html>
