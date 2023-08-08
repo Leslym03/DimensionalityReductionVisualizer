@@ -80,6 +80,8 @@ function initSelectDatasetButton() {
           document.getElementById('isomap_container').style.display = 'block';
           loadIsomapPlot();
       }
+
+      document.getElementById('sidebar').classList.toggle('active');
   }
   
   

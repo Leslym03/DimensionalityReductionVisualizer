@@ -1,6 +1,5 @@
 <div class="dashgraficas" id="graficasDiv">
-    <div class="columnas" id="contenedorGraficos">
-
+<div class="columnas" id="contenedorGraficos">
     <div class="container" id="pca_container" style="display: none;">
         <h3>PCA</h3>
         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -23,51 +22,50 @@
         <div class="diagram" id="clustering_pca_plot" style="display: none;"></div>
     </div>
 
-
-        <div class="container" id="lda_container" style="display: none;">
-            <h3>LDA</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="LDA-btncheck1">RD</label>
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="LDA-btncheck2">RD - Clustering</label>
-                <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="LDA-btncheck3">Clustering - RD</label>
-            </div>
-            <div class="diagram" id="lda_plot"></div>
-            <div class="diagram" id="lda_clustering_plot" style="display: none;"></div>
-            <div class="diagram" id="clustering_lda_plot" style="display: none;"></div>
+    <div class="container" id="lda_container" style="display: none;">
+        <h3>LDA</h3>
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck1" checked="" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="LDA-btncheck1">RD</label>
+            <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck2" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="LDA-btncheck2">RD - Clustering</label>
+            <input type="checkbox" class="btn-check"  onclick="mostrarLDA()" id="LDA-btncheck3" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="LDA-btncheck3">Clustering - RD</label>
         </div>
-
-        <div class="container" id="tsne_container" style="display: none;">
-            <h3>t-SNE</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="TSNE-btncheck1">RD</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="TSNE-btncheck2">RD - Clustering</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="TSNE-btncheck3">Clustering - RD</label>
-            </div>
-            <div class="diagram" id="tsne_plot"></div>
-            <div class="diagram" id="tsne_clustering_plot" style="display: none;"></div>
-            <div class="diagram" id="clustering_tsne_plot" style="display: none;"></div>
-        </div>
-
-        <div class="container" id="isomap_container" style="display: none;">
-            <h3>Isomap</h3>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()" id="ISOMAP-btncheck1" checked="" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck1">RD</label>
-                <input type="checkbox" class="btn-check" onclick="mostrarTSNE()" id="ISOMAP-btncheck2" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck2">RD - Clustering</label>
-                <input type="checkbox" class="btn-check"onclick="mostrarTSNE()" id="ISOMAP-btncheck3" autocomplete="off">
-                <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck3">Clustering - RD</label>
-            </div>
-            <div class="diagram" id="isomap_plot"></div>
-            <div class="diagram" id="isomap_clustering_plot" style="display: none;"></div>
-            <div class="diagram" id="clustering_isomap_plot" style="display: none;"></div>
-        </div>
-
+        <div class="diagram" id="lda_plot"></div>
+        <div class="diagram" id="lda_clustering_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_lda_plot" style="display: none;"></div>
     </div>
+
+    <div class="container" id="tsne_container" style="display: none;">
+        <h3>t-SNE</h3>
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck1" checked="" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="TSNE-btncheck1">RD</label>
+            <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck2" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="TSNE-btncheck2">RD - Clustering</label>
+            <input type="checkbox" class="btn-check" onclick="mostrarTSNE()"   id="TSNE-btncheck3" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="TSNE-btncheck3">Clustering - RD</label>
+        </div>
+        <div class="diagram" id="tsne_plot"></div>
+        <div class="diagram" id="tsne_clustering_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_tsne_plot" style="display: none;"></div>
+    </div>
+
+    <div class="container" id="isomap_container" style="display: none;">
+        <h3>Isomap</h3>
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" onclick="mostrarTSNE()" id="ISOMAP-btncheck1" checked="" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck1">RD</label>
+            <input type="checkbox" class="btn-check" onclick="mostrarTSNE()" id="ISOMAP-btncheck2" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck2">RD - Clustering</label>
+            <input type="checkbox" class="btn-check"onclick="mostrarTSNE()" id="ISOMAP-btncheck3" autocomplete="off">
+            <label class="btn btn-primary btn-sm" for="ISOMAP-btncheck3">Clustering - RD</label>
+        </div>
+        <div class="diagram" id="isomap_plot"></div>
+        <div class="diagram" id="isomap_clustering_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_isomap_plot" style="display: none;"></div>
+    </div>
+
+</div>
 </div>

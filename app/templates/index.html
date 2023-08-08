@@ -10,56 +10,66 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="static/js/function.js"></script>
-    <script src="static/js/sources.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="static/css/other.css">
-    <!-- Agrega el enlace a Tippy.js para los tooltips -->
-    <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous">
-
-    <!-- También agrega la biblioteca de Tippy.js -->
-    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy.umd.js" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.rtl.css">
-    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.rtl.min.css">
-    <link rel="stylesheet" type="text/scss" href="static/css/_bootswatch.scss">
-    <link rel="stylesheet" type="text/scss" href="static/css/_variables.css">
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/alert.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
-
-    <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script>
-        tippy('[data-tippy-content]');
-    </script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"></script>
-
+   
 </head>
 <body>
-
+    
     {% include 'navbar.html' %}
 
-    {% include 'data-tec.html' %}
+    <div class="contenedor-general">
 
-    <div class="dashbardia">
-        {% include 'select-tec.html' %}
         {% include 'tec-clustering.html' %}
+        <div class="barra">
+            {% include 'data-tec.html' %}
+        </div>
 
+        
     </div>
-    
+        
+
 
     
+
+
+ <!-- Agrega el enlace a Tippy.js para los tooltips -->
+ <link rel="stylesheet" href="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js">
+ <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous">
+
+ <!-- También agrega la biblioteca de Tippy.js -->
+ <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+ <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy.umd.js" integrity="sha384-8K9BjD7blUBnOS3EBh5VBBiTKh68ZIX4m4HP7w6sp+TGmU82+0s05dmlWt9Wfxv/" crossorigin="anonymous"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+ <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+ <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+ <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+ <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="static/css/bootstrap.rtl.css">
+ <link rel="stylesheet" type="text/css" href="static/css/bootstrap.rtl.min.css">
+ <link rel="stylesheet" type="text/scss" href="static/css/_bootswatch.scss">
+ <link rel="stylesheet" type="text/scss" href="static/css/_variables.css">
+
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/alert.min.js"></script>
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
+
+ <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+ <script src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper-utils.min.js"></script>
+ <script src="https://unpkg.com/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+ <script src="https://d3js.org/d3.v5.min.js"></script>
+ <script>
+     tippy('[data-tippy-content]');
+ </script>
+ <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.23.0/axios.min.js"></script>
+
+
+
+ <script src="static/js/sources.js"></script>
+
 </body>
 
 </html>

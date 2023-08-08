@@ -1,9 +1,13 @@
+.contenedor-general{
+    display: flex;
+}
 
 
 .diagram {
     width: 100%;
     max-width: 400px; /* Ajusta el ancho máximo de los gráficos */
     margin-bottom: 10px;
+    position:static;
 }
 
 .columnas {
@@ -17,12 +21,43 @@
 }
 
 .barra{
-    width: 100%;
-    max-width: 150px; /* Ajusta el ancho máximo de los gráficos */
-    margin-bottom: 10px;
+    width: auto;
 }
 
 .dashgraficas{
+    left: 10px;
+    top: 1px;
     width: 100%;
-    margin-bottom: 10px;
+    margin: 3%;
+    position:static;
 }
+
+
+
+/* menu desplegable */
+
+#sidebar {
+    position: fixed;
+    height: 100%;
+    left: -540px;
+    transition: all 500ms linear;
+    margin: auto;
+  }
+
+  #sidebar.active {
+    left: 0px;
+  }
+
+#sidebar .toggle-btn {
+    position: absolute;
+    left: 558px;
+    top: 1px;
+    cursor: pointer;
+  }
+  
+  #sidebar .toggle-btn span {
+    display: block;
+    width: 35px;
+    text-align: center;
+    font-size: 25px;
+  }

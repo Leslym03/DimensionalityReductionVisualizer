@@ -1,11 +1,145 @@
-<br>
-<div class="container">
-    <div class="text-center">
-        <label for="dataset-select">Selecciona un conjunto de datos:</label>
-        <select id="dataset-select">
-            <option value="wine">Wine</option>
+<div class="container-fluid d-flex">
+<div class="mr-auto p-2"> 
+<div id="sidebar" class="active">
+<div class="card bg-secondary mb-3">    
+    <div class="card-footer text-muted">
+       
+            <div class="toggle-btn card text-white bg-dark" id="toggle-btn">
+                <span>&#9776</span>
+            </div>
+        
+        <h6>1. Selecciona un conjunto de datos</h6> 
+    </div>
+    <div class="card-body">
+        <form>
+        <fieldset>
+            <select multiple="" class="form-select" id="dataset-select" size="1">
+            <option value="wine" >Wine</option>
             <option value="breast_cancer">Breast Cancer</option>
         </select>
-        <button id="select-dataset-button">Seleccionar</button>
+        <br>
+        <div class="d-grid gap-2">
+            <button class="btn btn-sm btn-success" id="select-dataset-button">Cargar datos</button>
+        </div>
+        </fieldset>  
+        </form>
     </div>
+        
+    <div class="card-footer text-muted">
+        <h6>2. Selecciona la tecnica de Reduccion de  Dimensionalidad (RD)</h6> 
+    </div>
+    <table class="table table-hover table-responsive-sm">
+        <tbody>
+            <thead class="table-dark">
+                <tr>
+                    <th>RD</th>
+                    <th></th>
+                    <th>Linealidad</th>
+                    <th>Localidad</th>
+                    <th>Metrica</th>
+                    <th>Supervisado</th>
+                    <th>Escalable</th>
+                </tr>
+            </thead>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Maximiza la varianza de los datos al encontrar las direcciones principales de máxima variabilidad, útil para comprender la estructura de los datos.">
+                    PCA
+                    </span>
+                </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox1" name="grafica1">
+                </td>
+                <td>Lineal</td>
+                <td>Global</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Maximiza la separabilidad entre clases, útil para tareas de clasificación y reconocimiento de patrones en las clases.">    
+                    LDA
+                    </span>
+                </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox3" name="grafica3">
+                </td>
+                <td>Lineal</td>
+                <td>Global</td>
+                <td>Si</td>
+                <td>Si</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Preserva relaciones locales entre puntos, útil para visualizar patrones complejos.">
+                    T-snet
+                    </span>
+                </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox2" name="grafica2">
+                </td>
+                <td>No lineal</td>
+                <td>Local</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Si</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Mantiene distancias geodésicas, útil para datos con geometría intrínseca compleja.">
+                        Isomap
+                    </span>
+                    </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox4" name="grafica4">
+                </td>
+                <td>No lineal</td>
+                <td>Global</td>
+                <td>Si</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Combina técnicas probabilísticas con optimización basada en grafos, preserva estructuras locales y globales mientras busca una distribución uniforme.">
+                        UMAP
+                    </span>
+                </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox5" name="grafica5">
+                </td>
+                <td>No lineal</td>
+                <td>Local</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Si</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <span data-tippy-content="Conserva relaciones de vecindad lineal, util para visualizar estructuras no lineales o regiones locales de datos.">
+                        LLE
+                    </span>
+                    </th>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="checkbox6" name="grafica6">
+                </td>
+                <td>No lineal</td>
+                <td>Local</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card-body">
+        <div class="d-grid gap-2">
+            <button class="btn btn-sm btn-success" onclick="mostrarGraficas()">Aplicar Técnicas RD</button>
+        </div>
+        
+    </div>
+</div>
+</div>
 </div>
