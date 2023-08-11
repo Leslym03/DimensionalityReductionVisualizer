@@ -10,6 +10,7 @@
             <input type="checkbox" class="btn-check" onclick="mostrarPCA()" id="PCA-btncheck3" autocomplete="off">
             <label class="btn btn-primary btn-sm" for="PCA-btncheck3">Clustering - RD</label>
         </div>
+
         <div id="clustering_selection" style="display: none;">
             <label for="clustering_method">Selecciona el método de clustering:</label>
             <select name="clustering_method" id="clustering_method">
@@ -20,6 +21,8 @@
         <div class="diagram" id="pca_plot"></div>
         <div class="diagram" id="pca_clustering_plot" style="display: none;"></div>
         <div class="diagram" id="clustering_pca_plot" style="display: none;"></div>
+        <div class="diagram" id="pca_clustering_DBSCAN_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_DBSCAN_pca_plot" style="display: none;"></div>
     </div>
 
     <div class="container" id="lda_container" style="display: none;">
@@ -35,6 +38,8 @@
         <div class="diagram" id="lda_plot"></div>
         <div class="diagram" id="lda_clustering_plot" style="display: none;"></div>
         <div class="diagram" id="clustering_lda_plot" style="display: none;"></div>
+        <div class="diagram" id="lda_clustering_DBSCAN_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_DBSCAN_lda_plot" style="display: none;"></div>
     </div>
 
     <div class="container" id="tsne_container" style="display: none;">
@@ -50,6 +55,8 @@
         <div class="diagram" id="tsne_plot"></div>
         <div class="diagram" id="tsne_clustering_plot" style="display: none;"></div>
         <div class="diagram" id="clustering_tsne_plot" style="display: none;"></div>
+        <div class="diagram" id="tsne_clustering_DBSCAN_plot" style="display: none;"></div>
+        <div class="diagram" id="clustering_DBSCAN_tsne_plot" style="display: none;"></div>
     </div>
 
     <div class="container" id="isomap_container" style="display: none;">

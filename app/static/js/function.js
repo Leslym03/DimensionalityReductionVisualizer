@@ -91,10 +91,15 @@ function initSelectDatasetButton() {
       const checkboxResultado = document.getElementById('PCA-btncheck1');
       const checkboxDRClustering = document.getElementById('PCA-btncheck2');
       const checkboxClusteringDR = document.getElementById('PCA-btncheck3');
+      //const checkboxDRClusteringDBSCAN = document.getElementById('PCA-btncheck4');
+      //const checkboxClusteringDRDBSCAN = document.getElementById('PCA-btncheck5');
   
       document.getElementById('pca_plot').style.display = 'none';
       document.getElementById('pca_clustering_plot').style.display = 'none';
       document.getElementById('clustering_pca_plot').style.display = 'none';
+      document.getElementById('pca_clustering_DBSCAN_plot').style.display = 'none';
+      document.getElementById('clustering_DBSCAN_pca_plot').style.display = 'none';
+      
       
       // Recorrer los checkboxes y mostrar las gráficas seleccionadas
       if (checkboxResultado.checked) {
@@ -106,11 +111,16 @@ function initSelectDatasetButton() {
       if (checkboxDRClustering.checked) {
           document.getElementById('pca_clustering_plot').style.display = 'block';
           loadPCAAndClusteringPlot();
+          document.getElementById('pca_clustering_DBSCAN_plot').style.display = 'block';
+          loadPCAAndClusteringDBSCANPlot();
       }
       if (checkboxClusteringDR.checked) {
           document.getElementById('clustering_pca_plot').style.display = 'block';
           loadClusteringAndPCAPlot();
+          document.getElementById('clustering_DBSCAN_pca_plot').style.display = 'block';
+          loadClusteringAndPCADBSCANPlot();
       }
+
   }
   
   
@@ -133,11 +143,23 @@ function initSelectDatasetButton() {
   
                   updateClusteringAndPCAPlot(selectedIndices);
                   updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
   
-  // Función para cargar el gráfico PCA y Clustering
+  // Función para cargar el gráfico PCA y Clustering KMEANS
   function loadPCAAndClusteringPlot() {
       fetch('/pca_and_clustering')
           .then(response => response.json())
@@ -148,12 +170,28 @@ function initSelectDatasetButton() {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
                   updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
                   updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
   
-  // Función para cargar el gráfico Clustering y PCA
+  // Función para cargar el gráfico Clustering y PCA KMEANS
   function loadClusteringAndPCAPlot() {
       fetch('/clustering_and_pca')
           .then(response => response.json())
@@ -164,10 +202,91 @@ function initSelectDatasetButton() {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
                   updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
                   updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
+
+  // Función para cargar el gráfico PCA y Clustering DBSCAN
+  function loadPCAAndClusteringDBSCANPlot() {
+    fetch('/pca_and_clustering_dbscan')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('pca_clustering_DBSCAN_plot', JSON.parse(data));
+            // Añadir un evento de selección para el gráfico PCA
+            document.getElementById('pca_clustering_DBSCAN_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updatePCAPlot(selectedIndices);
+                updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
+            });
+        });
+}
+
+// Función para cargar el gráfico Clustering y PCA DBSCAN
+function loadClusteringAndPCADBSCANPlot() {
+    fetch('/clustering_and_pca_dbscan')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('clustering_DBSCAN_pca_plot', JSON.parse(data));
+            // Añadir un evento de selección para el gráfico PCA
+            document.getElementById('clustering_DBSCAN_pca_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                updatePCAPlot(selectedIndices);
+
+                updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
+            });
+        });
+}
   
   //Funcion para mostrar resutaldo, clustering t-SNE
   function mostrarTSNE() {
@@ -179,6 +298,8 @@ function initSelectDatasetButton() {
       document.getElementById('tsne_plot').style.display = 'none';
       document.getElementById('tsne_clustering_plot').style.display = 'none';
       document.getElementById('clustering_tsne_plot').style.display = 'none';
+      document.getElementById('tsne_clustering_DBSCAN_plot').style.display = 'none';
+      document.getElementById('clustering_DBSCAN_tsne_plot').style.display = 'none';
   
       // Recorrer los checkboxes y mostrar las gráficas seleccionadas
       if (checkboxResultado.checked) {
@@ -190,10 +311,14 @@ function initSelectDatasetButton() {
       if (checkboxDRClustering.checked) {
           document.getElementById('tsne_clustering_plot').style.display = 'block';
           loadTSNEClusteringPlot();
+          document.getElementById('tsne_clustering_DBSCAN_plot').style.display = 'block';
+          loadTSNEClusteringDBSCANPlot();
       }
       if (checkboxClusteringDR.checked) {
           document.getElementById('clustering_tsne_plot').style.display = 'block';
           loadClusteringAndTSNEPlot();
+          document.getElementById('clustering_DBSCAN_tsne_plot').style.display = 'block';
+          loadClusteringAndTSNEDBSCANPlot();
       }
   }
   
@@ -213,6 +338,21 @@ function initSelectDatasetButton() {
                   updatePCAPlot(selectedIndices);
                   updateLDAPlot(selectedIndices);
                   updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
@@ -226,7 +366,24 @@ function initSelectDatasetButton() {
               document.getElementById('tsne_clustering_plot').on('plotly_selected', (eventData) => {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
-                  updateDBSCANPlot(selectedIndices);
+                  updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
@@ -240,10 +397,92 @@ function initSelectDatasetButton() {
               document.getElementById('clustering_tsne_plot').on('plotly_selected', (eventData) => {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
+
+                  updatePCAPlot(selectedIndices);
                   updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
+
+    // Función para cargar el gráfico t-SNE y DBSCAN
+    function loadTSNEClusteringDBSCANPlot() {
+        fetch('/tsne_and_clustering_dbscan')
+            .then(response => response.json())
+            .then(data => {
+                Plotly.newPlot('tsne_clustering_DBSCAN_plot', JSON.parse(data));
+                document.getElementById('tsne_clustering_DBSCAN_plot').on('plotly_selected', (eventData) => {
+                    var selectedPoints = eventData.points;
+                    var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                    //updateDBSCANPlot(selectedIndices);
+
+                    updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
+                });
+            });
+    }
+    
+    // Función para cargar el gráfico DBSCAN y t-SNE
+    function loadClusteringAndTSNEDBSCANPlot() {
+        fetch('/clustering_and_tsne_dbscan')
+            .then(response => response.json())
+            .then(data => {
+                Plotly.newPlot('clustering_DBSCAN_tsne_plot', JSON.parse(data));
+                document.getElementById('clustering_DBSCAN_tsne_plot').on('plotly_selected', (eventData) => {
+                    var selectedPoints = eventData.points;
+                    var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                    updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
+                });
+            });
+    }
   
   // Función para mostrar resutaldo, clustering LDA
   function mostrarLDA() {
@@ -254,6 +493,8 @@ function initSelectDatasetButton() {
       document.getElementById('lda_plot').style.display = 'none';
       document.getElementById('lda_clustering_plot').style.display = 'none';
       document.getElementById('clustering_lda_plot').style.display = 'none';
+      document.getElementById('lda_clustering_DBSCAN_plot').style.display = 'none';
+      document.getElementById('clustering_DBSCAN_lda_plot').style.display = 'none';
   
       if (checkboxResultado.checked) {
           document.getElementById('lda_plot').style.display = 'block';
@@ -263,10 +504,14 @@ function initSelectDatasetButton() {
       if (checkboxDRClustering.checked) {
           document.getElementById('lda_clustering_plot').style.display = 'block';
           loadLDAClusteringPlot();
+          document.getElementById('lda_clustering_DBSCAN_plot').style.display = 'block';
+          loadLDAClusteringDBSCANPlot();
       }
       if (checkboxClusteringDR.checked) {
           document.getElementById('clustering_lda_plot').style.display = 'block';
           loadClusteringAndLDAPlot();
+          document.getElementById('clustering_DBSCAN_lda_plot').style.display = 'block';
+          loadClusteringAndLDADBSCANPlot();
       }
   }
   
@@ -285,6 +530,21 @@ function initSelectDatasetButton() {
                   updatePCAPlot(selectedIndices);
                   updateTSNEPlot(selectedIndices);
                   updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
@@ -298,8 +558,25 @@ function initSelectDatasetButton() {
               document.getElementById('lda_clustering_plot').on('plotly_selected', (eventData) => {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
+
+                  updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
                   updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
                   updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
@@ -313,11 +590,91 @@ function initSelectDatasetButton() {
               document.getElementById('clustering_lda_plot').on('plotly_selected', (eventData) => {
                   var selectedPoints = eventData.points;
                   var selectedIndices = selectedPoints.map(point => point.pointIndex);
+                  updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
                   updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
                   updateLDAClusteringPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
+
+  // Función para cargar el gráfico LDA y Clustering
+  function loadLDAClusteringDBSCANPlot() {
+    fetch('/lda_and_clustering_dbscan')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('lda_clustering_DBSCAN_plot', JSON.parse(data));
+            document.getElementById('lda_clustering_DBSCAN_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+
+                updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
+            });
+        });
+}
+
+// Función para cargar el gráfico Clustering y LDA
+function loadClusteringAndLDADBSCANPlot() {
+    fetch('/clustering_and_lda_dbscan')
+        .then(response => response.json())
+        .then(data => {
+            Plotly.newPlot('clustering_DBSCAN_lda_plot', JSON.parse(data));
+            document.getElementById('clustering_DBSCAN_lda_plot').on('plotly_selected', (eventData) => {
+                var selectedPoints = eventData.points;
+                var selectedIndices = selectedPoints.map(point => point.pointIndex);
+
+                updatePCAPlot(selectedIndices);
+                  updateTSNEPlot(selectedIndices);
+                  updateLDAPlot(selectedIndices);
+                  updateISOMAPPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+            });
+        });
+}
   
   function mostrarISOMAP() {
       const checkboxResultado = document.getElementById('ISOMAP-btncheck1');
@@ -357,6 +714,21 @@ function initSelectDatasetButton() {
                   updatePCAPlot(selectedIndices);
                   updateTSNEPlot(selectedIndices);
                   updateLDAPlot(selectedIndices);
+  
+                  updateClusteringAndPCAPlot(selectedIndices);
+                  updatePCAAndClusteringPlot(selectedIndices);
+                  updatePCAAndClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndPCADBSCANPlot(selectedIndices);
+
+                  updateTSNEClusteringPlot(selectedIndices);
+                  updateClusteringAndTSNEPlot(selectedIndices);
+                  updateTSNEClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndTSNEDBSCANPlot(selectedIndices);
+
+                  updateLDAClusteringPlot(selectedIndices);
+                  updateClusteringAndLDAPlot(selectedIndices);
+                  updateLDAClusteringDBSCANPlot(selectedIndices);
+                  updateClusteringAndLDADBSCANPlot(selectedIndices);
               });
           });
   }
@@ -398,13 +770,22 @@ function initSelectDatasetButton() {
   }
   
   function updatePCAAndClusteringPlot(selectedIndices) {
-      Plotly.restyle('pca_clustering_plot', {selectedpoints: selectedIndices});
-  }
-  
-  function updateClusteringAndPCAPlot(selectedIndices) {
-      Plotly.restyle('clustering_pca_plot', {selectedpoints: selectedIndices});
-  }
-  
+    Plotly.restyle('pca_clustering_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndPCAPlot(selectedIndices) {
+    Plotly.restyle('clustering_pca_plot', {selectedpoints: selectedIndices});
+}
+
+function updatePCAAndClusteringDBSCANPlot(selectedIndices) {
+    Plotly.restyle('pca_clustering_DBSCAN_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndPCADBSCANPlot(selectedIndices) {
+    Plotly.restyle('clustering_DBSCAN_pca_plot', {selectedpoints: selectedIndices});
+}
+
+
   
   // Actualizar el gráfico t-SNE con los puntos seleccionados en el gráfico PCA
   function updateTSNEPlot(selectedIndices) {
@@ -419,6 +800,15 @@ function initSelectDatasetButton() {
       Plotly.restyle('clustering_tsne_plot', {selectedpoints: selectedIndices});
   }
   
+  function updateTSNEClusteringDBSCANPlot(selectedIndices) {
+    Plotly.restyle('tsne_clustering_DBSCAN_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndTSNEDBSCANPlot(selectedIndices) {
+    Plotly.restyle('clustering_DBSCAN_tsne_plot', {selectedpoints: selectedIndices});
+}
+
+
   // Actualizar el gráfico LDA con los puntos seleccionados en los otros gráficos
   function updateLDAPlot(selectedIndices) {
       Plotly.restyle('lda_plot', { selectedpoints: selectedIndices });
@@ -431,10 +821,28 @@ function initSelectDatasetButton() {
   function updateClusteringAndLDAPlot(selectedIndices) {
       Plotly.restyle('clustering_lda_plot', {selectedpoints: selectedIndices});
   }
+
+  function updateLDAClusteringDBSCANPlot(selectedIndices) {
+    Plotly.restyle('lda_clustering_DBSCAN_plot', {selectedpoints: selectedIndices});
+}
+
+function updateClusteringAndLDADBSCANPlot(selectedIndices) {
+    Plotly.restyle('clustering_DBSCAN_lda_plot', {selectedpoints: selectedIndices});
+}
   
+
+
   // Actualizar el gráfico Isomap con los puntos seleccionados en los otros gráficos
   function updateISOMAPPlot(selectedIndices) {
       Plotly.restyle('isomap_plot', { selectedpoints: selectedIndices });
+  }
+
+  function updateIsomapClusteringPlot(selectedIndices) {
+      Plotly.restyle('isomap_clustering_plot', { selectedpoints: selectedIndices });
+  }
+
+  function updateClusteringAndIsomapPlot(selectedIndices) {
+      Plotly.restyle('clustering_isomap_plot', { selectedpoints: selectedIndices });
   }
   
   
@@ -454,7 +862,13 @@ function initSelectDatasetButton() {
       loadIsomapPlot();
       loadClusteringAndIsomapPlot();
       loadIsomapClusteringPlot();
-      loadCorrelationMatrix();
+      //loadCorrelationMatrix();
+      loadPCAAndClusteringDBSCANPlot();
+      loadClusteringAndPCADBSCANPlot();
+      loadTSNEClusteringDBSCANPlot();
+      loadClusteringAndTSNEDBSCANPlot();
+      loadLDAClusteringDBSCANPlot();
+      loadClusteringAndLDADBSCANPlot();
       mostrarPCA();
       mostrarLDA();
       mostrarTSNE();

@@ -48,7 +48,7 @@ def preprocess_data(df):
     return df
 
 
-def reduction_then_clustering(reduction_method, selected_data):
+def reduction_then_clustering_kmeans(reduction_method, selected_data):
     X = selected_data.drop(columns=['target'])
     y = selected_data['target']
 
@@ -74,7 +74,7 @@ def reduction_then_clustering(reduction_method, selected_data):
             name=f'Cluster {cluster_label}'
         ))
     fig.update_layout(
-        title='Aplicacion de RD - Clustering',
+        title='Aplicacion de RD - Clustering KMeans',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True,
@@ -88,13 +88,53 @@ def reduction_then_clustering(reduction_method, selected_data):
     return jsonify(plot_data)
 
 
-def clustering_then_reduction(reduction_method, selected_data):
+def reduction_then_clustering_dbscan(reduction_method, selected_data):
+    X = selected_data.drop(columns=['target'])
+    y = selected_data['target']
+
+    # Reduccion de la data
+    reduced_data = reduction_method.fit_transform(X, y)
+    selected_data = selected_data.drop(columns=['target'])
+
+    # Realizar clustering utilizando dbscan
+    dbscan = DBSCAN(eps=0.5, min_samples=5)
+    labels = dbscan.fit_predict(reduced_data)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+    fig.update_layout(
+        title='Aplicacion de RD - Clustering DBSCAN',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+def clustering_then_reduction_kmeans(reduction_method, selected_data):
     # Separar los datos y las etiquetas
     X = selected_data.drop(columns=['target'])
     y = selected_data['target']
 
     # Realizar clustering utilizando K-means
-    kmeans = KMeans(n_clusters=3, random_state=42)
+    kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
     labels = kmeans.fit_predict(X)  # Aplicar clustering a los datos reducidos
 
 
@@ -115,7 +155,48 @@ def clustering_then_reduction(reduction_method, selected_data):
             name=f'Cluster {cluster_label}'
         ))
     fig.update_layout(
-        title='Aplicacion de Clustering - RD',
+        title='Aplicacion de Clustering KMeans - RD',
+        xaxis_title='Componente 1',
+        yaxis_title='Componente 2',
+        showlegend=True,
+        legend=dict(x=1, y=1, xanchor='right', yanchor='top'),
+        width=500, 
+        height=400
+    )
+
+    # Convertir los datos del gráfico a formato JSON compatible
+    plot_data = fig.to_json()
+    return jsonify(plot_data)
+
+
+def clustering_then_reduction_dbscan(reduction_method, selected_data):
+    # Separar los datos y las etiquetas
+    X = selected_data.drop(columns=['target'])
+    y = selected_data['target']
+
+    # Realizar clustering utilizando dbscan
+    dbscan = DBSCAN(eps=0.5, min_samples=5)
+    labels = dbscan.fit_predict(X)  # Aplicar clustering a los datos reducidos
+
+
+    # Ajustar el método de reducción con los datos y las etiquetas
+    reduced_data = reduction_method.fit_transform(X,y)
+
+    # Crear un DataFrame con los datos reducidos y las etiquetas de clustering
+    reduced_df = pd.DataFrame(data=reduced_data, columns=['Component 1', 'Component 2'])
+    reduced_df['Cluster'] = labels
+
+    # Crear un gráfico de dispersión interactivo con Plotly
+    fig = go.Figure()
+    for cluster_label in reduced_df['Cluster'].unique():
+        fig.add_trace(go.Scatter(
+            x=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 1'],
+            y=reduced_df.loc[reduced_df['Cluster'] == cluster_label, 'Component 2'],
+            mode='markers',
+            name=f'Cluster {cluster_label}'
+        ))
+    fig.update_layout(
+        title='Aplicacion de Clustering DBSCAN - RD',
         xaxis_title='Componente 1',
         yaxis_title='Componente 2',
         showlegend=True,
@@ -304,37 +385,76 @@ def isomap_plot():
 
 
 
-@app.route('/pca_and_clustering')
-def pca_and_clustering():
-    return reduction_then_clustering(PCA(n_components=2), selected_data)
 
-@app.route('/clustering_and_pca')
+@app.route('/pca_and_clustering', endpoint='pca_and_clustering')
+
+def pca_and_clustering():
+    return reduction_then_clustering_kmeans(PCA(n_components=2), selected_data)
+
+@app.route('/clustering_and_pca', endpoint='clustering_and_pca')
+
 def clustering_and_pca():
-    return clustering_then_reduction(PCA(n_components=2), selected_data)
+    return clustering_then_reduction_kmeans(PCA(n_components=2), selected_data)
+
+#dbscan
+
+@app.route('/pca_and_clustering_dbscan', endpoint='pca_and_clustering_dbscan')
+def pca_and_clustering_DBSCAN():
+    return reduction_then_clustering_dbscan(PCA(n_components=2), selected_data)
+
+@app.route('/clustering_and_pca_dbscan', endpoint='clustering_and_pca_dbscan')
+def clustering_and_pca_DBSCAN():
+    return clustering_then_reduction_dbscan(PCA(n_components=2), selected_data)
+
+#kmeans
 
 @app.route('/tsne_and_clustering')
 def tsne_and_clustering():
-    return reduction_then_clustering(TSNE(n_components=2), selected_data)
+    return reduction_then_clustering_kmeans(TSNE(n_components=2), selected_data)
 
 @app.route('/clustering_and_tsne')
 def clustering_and_tsne():
-    return clustering_then_reduction(TSNE(n_components=2), selected_data)
+    return clustering_then_reduction_kmeans(TSNE(n_components=2), selected_data)
+
+#dbscan
+
+@app.route('/tsne_and_clustering_dbscan')
+def tsne_and_clustering_DBSCAN():
+    return reduction_then_clustering_dbscan(TSNE(n_components=2), selected_data)
+
+@app.route('/clustering_and_tsne_dbscan')
+def clustering_and_tsne_DBSCAN():
+    return clustering_then_reduction_dbscan(TSNE(n_components=2), selected_data)
+#kmeans
 
 @app.route('/lda_and_clustering')
 def lda_and_clustering():
-    return reduction_then_clustering(LinearDiscriminantAnalysis(n_components=2), selected_data)
+    return reduction_then_clustering_kmeans(LinearDiscriminantAnalysis(n_components=2), selected_data)
 
 @app.route('/clustering_and_lda')
 def clustering_and_lda():
-    return clustering_then_reduction(LinearDiscriminantAnalysis(n_components=2), selected_data)
+    return clustering_then_reduction_kmeans(LinearDiscriminantAnalysis(n_components=2), selected_data)
+
+#dbscan
+
+@app.route('/lda_and_clustering_dbscan')
+def lda_and_clustering_DBSCAN():
+    return reduction_then_clustering_dbscan(LinearDiscriminantAnalysis(n_components=2), selected_data)
+
+@app.route('/clustering_and_lda_dbscan')
+def clustering_and_lda_DBSCAN():
+    return clustering_then_reduction_dbscan(LinearDiscriminantAnalysis(n_components=2), selected_data)
+
+#kmeans
+
 
 @app.route('/isomap_and_clustering')
 def isomap_and_clustering():
-    return reduction_then_clustering(Isomap(n_components=2), selected_data)
+    return reduction_then_clustering_kmeans(Isomap(n_components=2), selected_data)
 
 @app.route('/clustering_and_isomap')
 def clustering_and_isomap():
-    return clustering_then_reduction(Isomap(n_components=2), selected_data)
+    return clustering_then_reduction_kmeans(Isomap(n_components=2), selected_data)
 
 
 if __name__ == '__main__':
